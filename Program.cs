@@ -1,42 +1,36 @@
-﻿class PemrosesData 
+﻿class SimpleDataBase<T> 
 {
-    public void DapatkanNilaiTerbesar<T>(T nilai1, T nilai2, T nilai3) 
+    private List<T> storeData;
+    private List<DateTime> inputData = new List<DateTime>();
+
+    public SimpleDataBase() 
     {
-        float max = 0;
-        dynamic n1 = nilai1;
-        dynamic n2 = nilai2;
-        dynamic n3 = nilai3;
-
-        if (n1 > n2 && n1 > n3)
-        {
-            max = n1;
-        }
-
-        else if (n2 > n1 && n2 > n3)
-        {
-            max = n2;
-        }
-
-        else if (n3 > n1 && n3 > n2)
-        {
-            max = n3;
-        }
-
-        else 
-        {
-            Console.WriteLine(" tidak ada angka yang di input");  
-        }
-        Console.WriteLine("Nilai terbesar adalah " + max);
+        storeData = new List<T>();
     }
 
-    class utama
+    public void addNewData(T data) 
     {
-        public static void Main(string[] args) 
-        {
-            //103022300031
-            PemrosesData pm = new PemrosesData();
-            pm.DapatkanNilaiTerbesar<float>(10, 30, 22);
-        }
+        storeData.Add(data);
+        inputData.Add(DateTime.Now);
     }
 
+    public void printAllData() 
+    {
+        for (int i = 0; i < storeData.Count; i++) 
+        {
+            Console.WriteLine("Data " + (i + 1) + "berisi: " + storeData[i] + ", yang disimpan pada waktu UTC: " + inputData[i]);
+        }
+    }
 }
+
+class Program 
+{
+    public static void Main(string[] args) 
+    {
+        SimpleDataBase<int> simple = new SimpleDataBase<int>();
+        simple.addNewData(10);
+        simple.addNewData(30);
+        simple.addNewData(22);
+        simple.printAllData();
+    }
+} 
